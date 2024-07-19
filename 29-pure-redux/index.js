@@ -1,24 +1,23 @@
-import store from './redux/store.js'
+import store from './redux/store.js';
+import getCurrentTime from './utils/getCurrentTime.js';
 
-const unsubscribe = store.subscribe(()=> console.log(`Redux store just changed ${store.getState()}`))
+const addTimeBtn = document.querySelector('#addTime');
 
-store.dispatch({
+addTimeBtn.addEventListener('click', () => {
+  store.dispatch({
     type: 'ADD_CURRENT_TIME',
-    payload: '11:30:00'
+    payload: getCurrentTime(),
+  });
+});
+
+const timesList = document.querySelector('#timesList')
+
+store.subscribe(() => {
+    timesList.innerHTML = ''
+    const times = store.getState()
+    times.forEach((time) => {
+        let li = document.createElement('li')
+        li.innerText = time
+        timesList.appendChild(li)
+    });
 })
-
-store.dispatch({
-  type: 'ADD_CURRENT_TIME',
-  payload: '11:32:00',
-});
-
-store.dispatch({
-  type: 'CLEAR_ALL_TIMES',
-});
-
-unsubscribe()
-
-store.dispatch({
-  type: 'ADD_CURRENT_TIME',
-  payload: '11:32:00',
-});
