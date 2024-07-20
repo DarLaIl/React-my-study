@@ -10,6 +10,14 @@ addTimeBtn.addEventListener('click', () => {
   });
 });
 
+const clearTimeBtn = document.querySelector('#clearTimes');
+
+clearTimeBtn.addEventListener('click', () => {
+  store.dispatch({
+    type: 'CLEAR_ALL_TIMES',
+  });
+});
+
 const timesList = document.querySelector('#timesList')
 
 store.subscribe(() => {
